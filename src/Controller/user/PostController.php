@@ -1,28 +1,33 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\user;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CalculController extends AbstractController
+class PostController extends AbstractController
 {
     /**
-     * @Route("/add/{nb1}/{nb2}", name="add", requirements={"nb1"="\d+", "nb2"="\d+"})
+     * @Route("/")
+     *
      */
-    public function add(int $nb1, int $nb2): Response
+    public function index(): Response
     {
-        return new Response("$nb1 + $nb2 = " . ($nb1 + $nb2));
+        return $this->render('home/home.html.twig');
     }
 
     /**
-     * @Route("/squared/{nb1}", name="squared", requirements={"nb1"="\d+"})
+     * @Route("/post/{slug}")
+     * @param string $slug 
      */
-    public function squared(int $nb1): Response
+    public function post(string $slug): Response
     {
-        return new Response($nb1."² = ". $nb1 * $nb1);
+        return $this->render('post/post.html.twig',[
+            'slug' => $slug,
+        ]);
     }
+
 }
 
 ?>

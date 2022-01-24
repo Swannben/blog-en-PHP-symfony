@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/admin/category" name="category_index")
+     * @Route("/admin/category", name="category_index")
      * 
      */
     public function index(CategoryRepository $categoryRepository): Response

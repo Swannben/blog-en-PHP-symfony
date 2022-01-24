@@ -1,9 +1,21 @@
 {
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch"
+  },
   "devDependencies": {
-    "bootstrap": "^4.6.0",
+    "@hotwired/stimulus": "^3.0.1",
+    "@symfony/stimulus-bridge": "^2.0",
+    "@symfony/webpack-encore": "^1.8.1",
+    "autoprefixer": "^10.4.2",
+    "bootstrap": "^4.6.1",
+    "core-js": "^3.20.3",
     "jquery": "^3.6.0",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
-    "sass-loader": "^9.0.3"
+    "postcss-loader": "^6.2.1",
+    "sass-loader": "^9.0.3",
+    "webpack-notifier": "^1.15.0"
   }
 }

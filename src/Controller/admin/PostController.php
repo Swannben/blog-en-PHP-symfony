@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/admin/post")
+     * @Route("/admin/post", name="admin_post_index")
      * 
      */
     public function index(PostRepository $postRepository): Response
@@ -25,7 +25,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/admin/post/new", name="post_new", methods={"GET", "POST"})
+     * @Route("/admin/post/new", name="admin_post_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -37,7 +37,7 @@ class PostController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('post/new.html.twig', [
@@ -58,7 +58,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('post/edit.html.twig', [
@@ -77,7 +77,7 @@ class PostController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_post_index', [], Response::HTTP_SEE_OTHER);
     }
 }
 

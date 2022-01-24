@@ -14,19 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/" name="post_index", methods={"GET"})
+     * @Route("/", name="post_index")
      *
      */
-    public function index(PostRepository $postRepository): Response
+    public function index(): Response
     {
+        $postRepository = $this->getDoctrine()->getRepository(Post::class);
+
+        $posts = $postRepository->findAll();
+
+
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts' => $posts,
         ]);
     }
 
 
     /**
-     * @Route("/post/{slug}")
+     * @Route("/post/{slug}", name="post_show", methods={"GET"})
      * @param string $slug 
      */
     public function post(string $slug): Response

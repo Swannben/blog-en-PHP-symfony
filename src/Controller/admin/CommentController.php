@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/admin/comments" name="comment_index", methods={"GET"})
+     * @Route("/admin/comments", name="admin_comment_index", methods={"GET"})
      * 
      */
     public function index(CommentRepository $commentRepository): Response
@@ -25,7 +25,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/comments/new", name="comment_new", methods={"GET", "POST"})
+     * @Route("/admin/comments/new", name="admin_comment_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -37,7 +37,7 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('comment/new.html.twig', [
@@ -47,7 +47,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/comments/show/{id}", name="comment_show", methods={"GET"})
+     * @Route("/admin/comments/show/{id}", name="admin_comment_show", methods={"GET"})
      */
     public function show(Comment $comment): Response
     {
@@ -57,7 +57,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/comments/edit/{id}", name="comment_edit", methods={"GET", "POST"})
+     * @Route("/admin/comments/edit/{id}", name="admin_comment_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
     {
@@ -67,7 +67,7 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('comment/edit.html.twig', [
@@ -77,7 +77,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/comments/delete/{id}", name="comment_delete", methods={"POST"})
+     * @Route("/admin/comments/delete/{id}", name="admin_comment_delete", methods={"POST"})
      */
     public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
     {
@@ -86,7 +86,7 @@ class CommentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
     }
 
     

@@ -3,7 +3,6 @@
 namespace App\Controller\user;
 
 use App\Entity\Post;
-use App\Form\Post1Type;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/", name="post_index")
+     * @Route("/", name="home")
      *
      */
     public function index(): Response
@@ -36,8 +35,12 @@ class PostController extends AbstractController
      */
     public function post(string $slug): Response
     {
+        $postRepository = $this->getDoctrine()->getRepository(Post::class);
+
+        $post = $postRepository->findBySlug($slug);
+
         return $this->render('post/show.html.twig',[
-            'slug' => $slug,
+            'post' => $post,
         ]);
     }
 

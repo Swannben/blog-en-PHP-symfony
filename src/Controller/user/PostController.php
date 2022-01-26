@@ -4,6 +4,7 @@ namespace App\Controller\user;
 
 use App\Entity\Post;
 use App\Form\Post1Type;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,16 +28,6 @@ class PostController extends AbstractController
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
         ]);
-    }
-
-
-    /**
-     * @Route("/post/new/", name="post_new")
-     * @param string $slug 
-     */
-    public function new(): Response
-    {
-        return $this->render('post/new.html.twig');
     }
 
     /**

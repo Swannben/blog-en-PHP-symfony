@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,13 +15,14 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('content')
-            ->add('slug')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('categories')
+            ->add('title',TextType::class)
+            ->add('description',TextType::class)
+            ->add('content',TextType::class)
+            ->add('slug',TextType::class)
+            ->add('createdAt',DateType::class)
+            ->add('updatedAt',DateType::class)
+            ->add('categories',)
+            ->add('save', SubmitType::class)
         ;
     }
 

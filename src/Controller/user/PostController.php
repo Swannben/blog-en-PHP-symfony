@@ -31,15 +31,25 @@ class PostController extends AbstractController
 
 
     /**
+     * @Route("/post/new/", name="post_new")
+     * @param string $slug 
+     */
+    public function new(): Response
+    {
+        return $this->render('post/new.html.twig');
+    }
+
+    /**
      * @Route("/post/{slug}", name="post_show", methods={"GET"})
      * @param string $slug 
      */
     public function post(string $slug): Response
     {
-        return $this->render('post/post.html.twig',[
+        return $this->render('post/show.html.twig',[
             'slug' => $slug,
         ]);
     }
+
 
 }
 

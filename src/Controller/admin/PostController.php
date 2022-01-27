@@ -33,7 +33,6 @@ class PostController extends AbstractController
     public function new(Request $request): Response
     {   
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
-        $categories = $categoryRepository ->findAll();
 
         $post = new Post();
         $post->setPublishedAt(new DateTime());

@@ -18,10 +18,8 @@ class PostType extends AbstractType
             ->add('title',TextType::class)
             ->add('description',TextType::class)
             ->add('content',TextType::class)
-            ->add('slug',TextType::class)
-            ->add('createdAt',DateType::class)
-            ->add('updatedAt',DateType::class)
-            ->add('categories',)
+            ->add('publishedAt',DateType::class)
+            ->add('categories')
             ->add('save', SubmitType::class)
         ;
     }

@@ -4,7 +4,6 @@
 
 {% block body %}
     <h1>Post</h1>
-
     <table class="table">
         <tbody>
             <tr>
@@ -38,6 +37,8 @@
         </tbody>
     </table>
 
+    {{ include('comment/_form.html.twig') }}
+    
     <a href="{{ path('home') }}">back to homepage</a>
 
 {% endblock %}

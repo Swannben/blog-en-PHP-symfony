@@ -25,8 +25,8 @@
                 <td>{{ comment.valid ? 'Yes' : 'No' }}</td>
                 <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('comment_show', {'id': comment.id}) }}">show</a>
-                    <a href="{{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+                    <a href="{{ path('admin_comment_valid', {'id': comment.id}) }}">valid</a>
+                    <a href="{{ path('admin_comment_delete', {'id': comment.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('comment_new') }}">Create new</a>
 {% endblock %}

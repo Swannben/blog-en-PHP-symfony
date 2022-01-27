@@ -59,6 +59,11 @@ class Post
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $publishedAt;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -193,6 +198,18 @@ class Post
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }

@@ -25,69 +25,49 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/comments/new", name="admin_comment_new", methods={"GET", "POST"})
+     * @Route("/admin/comments/valid/{id}", name="admin_comment_valid")
+     * @param int $id
+     * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function valid(int $id): Response
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($comment);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
+        $manager = $this->getDoctrine()->getManager();
+        $commment = $manager->getRepository(Comment::class)->find($id);
+        if ($commment === null) {
+            throw $this->createNotFoundException("Comment not found");
         }
 
-        return $this->renderForm('comment/new.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/comments/show/{id}", name="admin_comment_show", methods={"GET"})
-     */
-    public function show(Comment $comment): Response
-    {
-        return $this->render('comment/show.html.twig', [
-            'comment' => $comment,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/comments/edit/{id}", name="admin_comment_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('comment/edit.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/comments/delete/{id}", name="admin_comment_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($comment);
-            $entityManager->flush();
-        }
-
+        $commment->setValid(true);
+        $manager->flush();
         return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    /**
+     * @Route("/admin/comments/delete/{id}", name="admin_comment_delete")
+     * @param int $id
+     * @return Response
+     */
+    public function delete(int $id): Response
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $comm = $manager->getRepository(Comment::class)->find($id);
+        if (!$comm) {
+            throw $this->createNotFoundException("Comment not found");
+        }
+        $manager->remove($comm);
+        $manager->flush();
+        return $this->redirectToRoute('admin_comment_index');
+    }
+
+    public function recentComment(): Response
+    {
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->findBy(array('valid' => true), array('createdAt' => 'DESC'), 5);
+        return $this->render('comment/recent_comment.html.twig', [
+            'comments' => $comment
+        ]);
+    }
+
 
     
 

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,6 +37,15 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getValidPost() {
+        return $this->createQueryBuilder("p")
+            ->andWhere('p.publishedAt <= :time')
+            ->setParameter('time', new DateTime())
+            ->orderBy('p.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     
     public function findBySlug($slug): Post

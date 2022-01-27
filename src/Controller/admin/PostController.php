@@ -91,14 +91,18 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/admin/post/delete/{id}", name="post_delete", methods={"POST"})
+     * @Route("/admin/post/delete/{id}", name="post_delete", methods={"GET"})
+     * @param int $id
      */
-    public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
+    public function delete(int $id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($post);
-            $entityManager->flush();
+        $manager = $this->getDoctrine()->getManager();
+        $post= $manager->getRepository(Post::class)->find($id);
+        if (!$post) {
+            throw $this->createNotFoundException("Post not found");
         }
+        $manager->remove($post);
+        $manager->flush();
 
         return $this->redirectToRoute('admin_post_index', [], Response::HTTP_SEE_OTHER);
     }

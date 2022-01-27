@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,19 @@ class CommentRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
+    }
+
+    public function getValidComment() {
+        return $this->createQueryBuilder("c")
+            ->andWhere('c.valid = :valid')
+            ->setParameter('valid', true)
+            ->orderBy('c.createdAt', 'DESC')
+            ->join('App\Entity\Post','p',\Doctrine\ORM\Query\Expr\Join::WITH,'c.post = p')
+            ->andWhere('p.publishedAt <= :time')
+            ->setParameter('time', new DateTime())
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

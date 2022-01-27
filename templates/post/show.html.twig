@@ -3,17 +3,9 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
-    <h1>Post</h1>
+    <h1>{{ post.title }}</h1>
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ post.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ post.title }}</td>
-            </tr>
             <tr>
                 <th>Description</th>
                 <td>{{ post.description }}</td>
@@ -37,8 +29,26 @@
         </tbody>
     </table>
 
+    <div>
+        <h1>Liste des commentaire</h1>
+
+        <div class="comment_wrapper">
+            {%for comment in post.comments %}
+                {%if comment.valid == true %}
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comment.username }}</h5>
+                            <p class="card-text">{{ comment.content }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <h2>Aucun post n'a été trouver man</h2>
+            {% endfor %}
+        </div>
+    </div>
     {{ include('comment/_form.html.twig') }}
-    
+
     <a href="{{ path('home') }}">back to homepage</a>
 
 {% endblock %}

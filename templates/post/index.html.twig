@@ -4,24 +4,25 @@
 
 {% block body %}
     <h1>Post index</h1>
-        <tbody>
-        {% for post in posts %}
+
+    <div id="post_wrapper">
+
             <div class="list-group">
-                <a href="{{ path('post_show', {'slug': post.slug}) }}" class="list-group-item list-group-item-action active" aria-current="true">
+                {% for post in postlist %}
+                <a href="{{ path('post_show', {'slug': post.slug}) }}" class="list-group-item list-group-item-action pad">
                     <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ post.title }}</h5>
-                    <small>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</small>
+                        <h5 class="mb-1">{{ post.title }}</h5>
+                        <small>Date de publication: {{ post.publishedAt ? post.publishedAt|date('d/m/Y') : '' }}</small>
                     </div>
                     <p class="mb-1">{{ post.content }}</p>
                     <small>{{ post.description }}</small>
                 </a>
                 {#<td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>#}
-        {% else %}
-            <h2>Aucun post n'a été trouver man</h2>
-        {% endfor %}
-        </tbody>
-
-         {{ include('comment/_form.html.twig') }}
-    </table>
+                {% else %}
+                <h2>Aucun post n'a été trouver man</h2>
+                {% endfor %}
+            </div>
+            {{ knp_pagination_render(postlist) }}
+    </div>
 
 {% endblock %}

@@ -13,21 +13,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class PostController extends AbstractController
 {
     /**
-     * @Route("/", name="home", methods={"GET", "POST"})
-     *
+     * @Route("/{page}", name="home", methods={"GET"})
+     * @param int $page
      */
-    public function index(): Response
+    public function index(int $page = 1, PaginatorInterface $paginator): Response
     {
         $postRepository = $this->getDoctrine()->getRepository(Post::class);
 
         $posts = $postRepository->getValidPost();
-
+        $postlist = $paginator->paginate($posts,$page,5);
         return $this->render('post/index.html.twig', [
-            'posts' => $posts,
+            'postlist' => $postlist,
+
         ]);
     }
 
@@ -55,6 +57,10 @@ class PostController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($comment);
             $manager->flush();
+
+            return $this->redirectToRoute('post_show', [
+                'slug' => $slug
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('post/show.html.twig',[

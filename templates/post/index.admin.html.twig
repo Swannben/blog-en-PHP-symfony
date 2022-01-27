@@ -2,25 +2,27 @@
 
 {% block title %}Post index{% endblock %}
 {% block body %}
-    <h1>Post index</h1>
-    <tbody>
-    {% for post in posts %}
-        <tr>
-            <td>{{ post.title }}</td>
-            <td>{{ post.description }}</td>
-            <td>{{ post.content }}</td>
-            <td>{{ post.slug }}</td>
-            <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            <td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            <td>
-                <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
-            </td>
-        </tr>
-    {% else %}
+    <h1>Listes de posts</h1>
+
+    <div class="list-group">
+        {% for post in posts %}
+        <div style="position:relative;">
+            <a href="{{ path('post_edit', {'id': post.id}) }}" class="list-group-item list-group-item-action pad" >
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ post.title }}</h5>
+                    <small>Date de publication: {{ post.publishedAt ? post.publishedAt|date('d/m/Y') : '' }}</small>
+                </div>
+                <p class="mb-1">{{ post.content }}</p>
+                <small>{{ post.description }}</small>
+            </a>
+            <a class="btn btn-primary supr_post_btn" href="{{ path('post_delete', {'id': post.id}) }}" role="button">supprimer</a>
+        </div>
+        {#<td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>#}
+        {% else %}
         <h2>Aucun post n'a été trouver man</h2>
-    {% endfor %}
-    </tbody>
-    </table>
+        {% endfor %}
+    </div>
+
 
     <a class="nav-link" href="{{path('admin_post_new')}}" aria-current="page" >Nouveau post</a>
 {% endblock %}

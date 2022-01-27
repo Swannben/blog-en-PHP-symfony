@@ -1,16 +1,16 @@
-<h4>Recent comments</h4>
-<div class="accordion" id="accordionComment">
+<h4>Commentaires récents</h4>
+<div class="card_comment_wrapper">
     {% for comment in comments %}
-        <div class="accordion-item">
 
-            <h2 class="accordion-header" id="heading{{ comment.id }}">
-                <button class="accordion-button" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapse{{ comment.id }}" aria-controls="collapse{{ comment.id }}">
-                    {{ comment.post.title }}: {{ comment.username }} <code class="text-muted">{{ comment.createdAt.format('Y-m-d H:i:s') }}</code>
-                </button>
-            </h2>
-            <div id="collapse{{ comment.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ comment.id }}" data-mdb-parent="#accordionComment">
-                <div class="accordion-body">{{ comment.content }}</div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title" style="color:black;">{{ comment.post.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Pseudo: {{ comment.username }}</h6>
+                <p class="card-text" style="color:black;">{{ comment.createdAt.format('Y-m-d H:i:s') }}</p>
             </div>
         </div>
+
+    {% else %}
+        <h5>Aucun commentaire</h5>
     {% endfor %}
 </div>

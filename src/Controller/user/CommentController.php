@@ -16,7 +16,8 @@ class CommentController extends AbstractController
 
     public function recentComment(): Response
     {
-        $comment = $this->getDoctrine()->getRepository(Comment::class)->findBy(array('valid' => true), array('createdAt' => 'DESC'), 5);
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->getValidComment();
+
         return $this->render('comment/comment.recent.html.twig', [
             'comments' => $comment
         ]);

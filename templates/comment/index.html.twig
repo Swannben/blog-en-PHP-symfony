@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.admin.html.twig' %}
 
 {% block title %}Comment index{% endblock %}
 
@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>PostName</th>
                 <th>Username</th>
                 <th>Content</th>
                 <th>Valid</th>
@@ -20,6 +21,7 @@
         {% for comment in comments %}
             <tr>
                 <td>{{ comment.id }}</td>
+                <td>{{ comment.post.title }}</td>
                 <td>{{ comment.username }}</td>
                 <td>{{ comment.content }}</td>
                 <td>{{ comment.valid ? 'Yes' : 'No' }}</td>

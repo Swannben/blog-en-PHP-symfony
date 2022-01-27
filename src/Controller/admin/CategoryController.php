@@ -77,15 +77,18 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/admin/category/delete/{id}", name="category_delete", methods={"POST"})
+     * @Route("/admin/category/delete/{id}", name="category_delete", methods={"GET"})
+     * @param int $id
      */
-    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    public function delete(int $id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($category);
-            $entityManager->flush();
+        $manager = $this->getDoctrine()->getManager();
+        $category = $manager->getRepository(Category::class)->find($id);
+        if (!$category ) {
+            throw $this->createNotFoundException("Category not found");
         }
-
+        $manager->remove($category);
+        $manager->flush();
         return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
     }
 }

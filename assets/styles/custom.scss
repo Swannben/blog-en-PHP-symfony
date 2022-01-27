@@ -5,3 +5,31 @@
         color: white;
     }
 }
+
+.pad{
+    margin-top: 50px;
+}
+
+.list-group:first-child{
+    margin-top: 5px;
+}
+
+
+
+#root{
+    padding-left: 30px;
+}
+
+.supr_post_btn{
+    position: absolute;
+    background-color: red;
+    color: white;
+    right: 0%;
+    bottom: 0%;
+    z-index: 10;
+}
+
+.card_comment_wrapper{
+    height: 300px;
+    overflow: scroll;
+}

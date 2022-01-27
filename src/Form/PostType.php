@@ -3,12 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Post;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PostType extends AbstractType
 {
@@ -19,7 +21,7 @@ class PostType extends AbstractType
             ->add('description',TextType::class)
             ->add('content',TextType::class)
             ->add('publishedAt',DateType::class)
-            ->add('categories')
+            ->add('categories', EntityType::class, ['class' => Category::class, 'choice_label' => 'name', 'multiple' => true, 'expanded' => true, 'by_reference' => false])
             ->add('save', SubmitType::class)
         ;
     }

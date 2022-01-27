@@ -1,0 +1,12 @@
+<h4>Listes des catégories</h4>
+<ul class="list-group">
+    {% for category in categories %}
+          <li class="list-group-item d-flex justify-content-between align-items-center" style="color:black;">
+                {{ category.name }}
+                <span class="badge bg-primary rounded-pill">{{ category.posts|length }}</span>
+            </li>
+    {% else %}
+        <h5>Aucune categori</h5>
+    {% endfor %}
+
+</ul>

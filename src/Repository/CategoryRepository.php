@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,19 @@ class CategoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
+    }
+
+
+    public function getCategoryList(): array
+    {
+        return $this->createQueryBuilder('c')
+        ->addSelect('p')
+        ->join('c.posts','p')
+        ->andWhere('p.publishedAt <= :time')
+        ->setParameter('time', new DateTime())
+        ->getQuery()
+        ->getResult();
+
     }
 
     // /**
